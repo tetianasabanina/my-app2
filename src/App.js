@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 
 import PokemonInfo from './components/PokemonInfo';
 import PokemonFilter from './components/PokemonFilter';
@@ -8,6 +8,28 @@ import PokemonContext from './PokemonContext';
 import './App.css';
 import styled from '@emotion/styled';
 import { CssBaseline } from '@mui/material';
+
+const PokemonReducer = (state, action) => {
+	switch (action.type) {
+		case 'SET_FILTER':
+			return {
+				...state,
+				filter: action.payload,
+			};
+		case 'SET_POKEMON':
+			return {
+				...state,
+				pokemon: action.payload,
+			};
+		case 'SET_SELECTED_POKEMON':
+			return {
+				...state,
+				selectedPokemon: action.payload,
+			};
+		default:
+			throw new Error('No selection');
+	}
+};
 
 const Title = styled.h1`
 	text-align: center;
@@ -24,29 +46,32 @@ const Container = styled.div`
 `;
 
 function App() {
-	const [filter, setFilter] = useState('');
-	const [selectedPokemon, setSelectedPokemon] = useState(null);
-	const [pokemon, setPokemon] = useState(null);
+	const [state, dispatch] = useReducer(PokemonReducer, {
+		pokemon: [],
+		filter: '',
+		selectedPokemon: null,
+	});
 
 	useEffect(() => {
 		fetch('http://localhost:3000/my-app2/pokemon.json')
 			.then((resp) => resp.json())
-			.then((data) => setPokemon(data));
+			.then((data) =>
+				dispatch({
+					type: 'SET_POKEMON',
+					payload: data,
+				})
+			);
 	}, []);
 
-	if (!pokemon) {
+	if (!state.pokemon) {
 		return <div>Loading data</div>;
 	}
 
 	return (
 		<PokemonContext.Provider
 			value={{
-				filter,
-				pokemon,
-				selectedPokemon,
-				setFilter,
-				setPokemon,
-				setSelectedPokemon,
+				state,
+				dispatch,
 			}}
 		>
 			<Container>

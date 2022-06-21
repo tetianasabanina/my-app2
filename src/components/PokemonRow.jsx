@@ -8,7 +8,7 @@ const PokemonRow = ({ pokemon, onSelect }) => (
 		<td>{pokemon.type.join(', ')}</td>
 		<td>
 			<Button variant='contained' onClick={() => onSelect(pokemon)}>
-				Select!
+				More information
 			</Button>
 		</td>
 	</tr>
