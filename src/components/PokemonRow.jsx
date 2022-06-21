@@ -1,6 +1,6 @@
 import React from 'react';
-import propTypes from 'prop-types';
 import Button from '@mui/material/Button';
+import PokemonType from '../PokemonType';
 
 const PokemonRow = ({ pokemon, onSelect }) => (
 	<tr>
@@ -15,13 +15,7 @@ const PokemonRow = ({ pokemon, onSelect }) => (
 );
 
 PokemonRow.propTypes = {
-	pokemon: propTypes.shape({
-		name: propTypes.shape({
-			english: propTypes.string.isRequired,
-		}),
-		type: propTypes.arrayOf(propTypes.string).isRequired,
-	}),
-	onSelect: propTypes.func,
+	pokemon: PokemonType
 };
 
 export default PokemonRow;
