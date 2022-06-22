@@ -15,7 +15,7 @@ const PokemonRow = ({ pokemon, onSelect }) => (
 );
 
 PokemonRow.propTypes = {
-	pokemon: PokemonType
+	pokemon: PokemonType,
 };
 
 export default PokemonRow;
