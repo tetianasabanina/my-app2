@@ -1,4 +1,5 @@
 import { makeAutoObservable, observable, computed } from 'mobx';
+import pokemon from './pokemon.json';
 
 class Store {
 	pokemon = [];
@@ -32,8 +33,12 @@ class Store {
 
 const store = new Store();
 
+// imitation of network request
 fetch('http://localhost:3000/my-app2/pokemon.json')
 	.then((resp) => resp.json())
 	.then((pokemon) => store.setPokemon(pokemon));
+
+// for the deployment on gh-pages
+store.setPokemon(pokemon);
 
 export default store;
